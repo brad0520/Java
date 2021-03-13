@@ -17,5 +17,4 @@ public class Article {
 		nickname = aNickname;
 		hit = aHit;
 	}
-
 }

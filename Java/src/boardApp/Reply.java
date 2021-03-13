@@ -15,5 +15,4 @@ public class Reply {
 		this.nickname = nickname;
 		this.regDate = regDate;
 	}
-
 }

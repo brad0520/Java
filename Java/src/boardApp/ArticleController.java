@@ -5,16 +5,16 @@ import java.util.Scanner;
 
 public class ArticleController extends Controller {
 
+	Scanner sc = new Scanner(System.in);
 	ArrayList<Article> articles = new ArrayList<Article>();
 	ArrayList<Reply> replies = new ArrayList<Reply>();
-	
+
 	int num = 4;
 	int rNum = 1;
-	
+
 	MemberController mc = new MemberController();
-	Scanner sc = new Scanner(System.in);
-	
-	public void articleController() {
+
+	public ArticleController() {
 
 		Article a1 = new Article(1, "안녕하세요", "안녕하세요", "2021.03.08", "익명", 30);
 		Article a2 = new Article(2, "반갑습니다", "반갑습니다", "2021.03.08", "익명", 20);
@@ -24,12 +24,12 @@ public class ArticleController extends Controller {
 		articles.add(a2);
 		articles.add(a3);
 	}
-	
 	public void doCommand(String command) {
-	
-		if (command.equals("add")) {
-			addArticle(); // top 다운방식
 
+		if (command.equals("add")) {
+			if(isLogin()) {
+				addArticle(); // top 다운방식				
+			}
 		} else if (command.equals("list")) {
 			printArticleList(articles);
 
@@ -37,17 +37,18 @@ public class ArticleController extends Controller {
 			updateArticle();
 
 		} else if (command.equals("delete")) {
-			deleteArticle();
-
+			if (isLogin()) {
+				deleteArticle();				
+			}
 		} else if (command.equals("search")) {
 			searchArticle();
 
 		} else if (command.equals("read")) {
-			readArticle();
-
+			if (isLogin()) {
+				readArticle();
+			}
 		}
 	}
-	
 	// =================================================================
 	public void searchArticle() {
 		// 제목으로 검색
@@ -101,7 +102,6 @@ public class ArticleController extends Controller {
 
 		System.out.println("게시물이 등록되었습니다.");
 	}
-
 	//=================================================================
 	// 전체 게시물을 받아서 출력해주는 메서드
 	public void printArticleList(ArrayList<Article> articles) {
@@ -130,8 +130,6 @@ public class ArticleController extends Controller {
 		System.out.println("작성자 : " + a1.nickname);
 		System.out.println("======================");
 	}
-
-
 	//=================================================================
 	// 특정 게시물의 index를 찾아주는 메서드
 	public int getIndexOfArticle(int targetNum) {
@@ -147,9 +145,7 @@ public class ArticleController extends Controller {
 
 		return targetIndex; 
 	}
-
 	//=================================================================
-
 	public void updateArticle() {
 		System.out.println("몇번 데이터를 수정하시겠습니까? :");
 		int targetNum = sc.nextInt();
@@ -175,9 +171,7 @@ public class ArticleController extends Controller {
 
 		printArticleList(articles);
 	}
-
 	//=================================================================
-
 	public void readArticle() {
 		System.out.println("상세보기할 게시물 번호를 입력해주세요 : ");
 		int targetNum = sc.nextInt();
@@ -195,11 +189,8 @@ public class ArticleController extends Controller {
 			readDetailArticle(a1);
 			a1.hit++;
 		}
-
 	}
-
 	//=================================================================
-
 	public void readDetailArticle(Article a1) {
 		while (true) {
 			System.out.println("상세보기 기능을 선택해주세요(1. 댓글 등록, 2. 좋아요, 3. 수정, 4. 삭제, 5. 목록으로) : ");
@@ -230,7 +221,6 @@ public class ArticleController extends Controller {
 			}
 		}
 	}
-
 	//=================================================================
 	public void replyArticle(Article a1) {
 		if (BoardApp.loginedMember ==null) {
@@ -243,9 +233,9 @@ public class ArticleController extends Controller {
 			Reply reply = new Reply(rNum, a1.num, newReply, BoardApp.loginedMember.nickname, regDate);
 			replies.add(reply);
 			System.out.println("댓글이 등록되었습니다.");
-			
+
 			printArticle(a1);
-			
+
 			//		게시글별로 댓글이 관리가 되야하지 않을까? 
 			//		그러면 게시글의 번호를 갖는 댓글만 먼저 정리하는 과정이 필요하지 않을지...
 			System.out.println("=========댓글=========");
@@ -258,11 +248,10 @@ public class ArticleController extends Controller {
 				}
 			}
 			System.out.println("====================");
-			
+
 			rNum++;
 		}
 	}
-
 	//=================================================================
 	public void deleteArticle() {
 
@@ -276,10 +265,6 @@ public class ArticleController extends Controller {
 			// 삭제 코드
 			articles.remove(targetIndex);
 		}
-
 		printArticleList(articles);
 	}
-	
-	
-	
 }
