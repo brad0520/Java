@@ -1,0 +1,2 @@
+INDEX VERSION 1.131+C:\Users\SBS-\Desktop\Java2\.metadata\.plugins\org.eclipse.jdt.core
+3316466471.index
