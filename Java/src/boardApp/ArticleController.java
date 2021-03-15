@@ -5,9 +5,9 @@ import java.util.Scanner;
 
 public class ArticleController extends Controller {
 
-	Scanner sc = new Scanner(System.in);
 	ArrayList<Article> articles = new ArrayList<Article>();
 	ArrayList<Reply> replies = new ArrayList<Reply>();
+	LikeDao likeDao = new LikeDao();
 
 	int num = 4;
 	int rNum = 1;
@@ -34,7 +34,9 @@ public class ArticleController extends Controller {
 			printArticleList(articles);
 
 		} else if (command.equals("update")) {
-			updateArticle();
+			if (isLogin()) {
+				updateArticle();				
+			}
 
 		} else if (command.equals("delete")) {
 			if (isLogin()) {
@@ -92,7 +94,7 @@ public class ArticleController extends Controller {
 		String title = sc.next();
 		System.out.println("내용을 입력해주세요 : ");
 		String body = sc.next();
-		String regDate = Util.getNowDate();
+		String regDate = Util.getCurrentDate();
 
 		// Article class를 통해 알려준 게시물 저장소 만들어줘
 		Article a1 = new Article(num, title, body, regDate, "익명", 0);
@@ -115,6 +117,10 @@ public class ArticleController extends Controller {
 			System.out.println("등록일 : " + a1.regDate);
 			System.out.println("작성자 : " + a1.nickname);
 			System.out.println("조회수 : " + a1.hit);
+			
+			int likeCnt = LikeDao.getLikeCnt(target.getId());
+			System.out.println("좋아요 : " + likeCnt);
+			
 			System.out.println("======================");
 		}
 	}
@@ -127,6 +133,10 @@ public class ArticleController extends Controller {
 		System.out.println("내용 : " + a1.body);
 		System.out.println("등록일 : " + a1.regDate);
 		System.out.println("조회수 : " + a1.hit);
+		
+		int likeCnt = LikeDao.getLikeCnt(target.getId());
+		System.out.println("좋아요 : " + likeCnt);
+		
 		System.out.println("작성자 : " + a1.nickname);
 		System.out.println("======================");
 	}
@@ -165,8 +175,8 @@ public class ArticleController extends Controller {
 			String newBody = sc.next();
 
 			Article article = articles.get(targetIndex);
-			article.title = newTitle;
-			article.body = newBody;
+			article.setTitle(newTitle);
+			article.setBody(newBody);
 		}
 
 		printArticleList(articles);
@@ -187,7 +197,7 @@ public class ArticleController extends Controller {
 			Article a1 = articles.get(targetIndex);
 			printArticle(a1);
 			readDetailArticle(a1);
-			a1.hit++;
+			a1.setHit(a1.getHit() + 1);
 		}
 	}
 	//=================================================================
@@ -204,7 +214,21 @@ public class ArticleController extends Controller {
 				break;
 
 			} else if (command == 2) {
-				System.out.println("좋아요를 눌러주세요.");
+				
+				if (isLogin()) { 
+					
+					Like rst = likeDao.getLikeByArticleIdAndMemberId(target.getId(), loginedMember.getId());
+					
+					if (rst == null) {
+						Like like = new Like(target.getId(), loginedMember.getId());
+						likeDao.insertLike(like);
+						System.out.println("좋아요를 체크했습니다.");
+					} else {
+						likeDao.removeLike(rst);
+						System.out.println("좋아요를 해제했습니다.");
+					}
+				}				
+				
 				break;
 
 			} else if (command == 3) {
@@ -229,8 +253,8 @@ public class ArticleController extends Controller {
 		} else {
 			System.out.println("댓글 내용을 입력해주세요 :");
 			String newReply = sc.next();
-			String regDate = Util.getNowDate();
-			Reply reply = new Reply(rNum, a1.num, newReply, BoardApp.loginedMember.nickname, regDate);
+			String regDate = Util.getCurrentDate();
+			Reply reply = new Reply(rNum, a1.getId(), newReply, BoardApp.loginedMember.nickname, regDate);
 			replies.add(reply);
 			System.out.println("댓글이 등록되었습니다.");
 
