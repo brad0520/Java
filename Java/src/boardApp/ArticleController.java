@@ -15,7 +15,7 @@ public class ArticleController extends Controller {
 	MemberController mc = new MemberController();
 
 	public ArticleController() {
-
+// 코드 리펙토링이 필요함
 		Article a1 = new Article(1, "안녕하세요", "안녕하세요", "2021.03.08", "익명", 30);
 		Article a2 = new Article(2, "반갑습니다", "반갑습니다", "2021.03.08", "익명", 20);
 		Article a3 = new Article(3, "안녕2", "안녕2", "2021.03.08", "익명", 10);
