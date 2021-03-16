@@ -12,18 +12,15 @@ public class BroadApp {
 
 		Scanner sc = new Scanner(System.in);
 
-		// 드라이버 정보
+		// 데이터베이스 연결
 		String driver = "com.mysql.cj.jdbc.Driver";
-		// dbms 주소
-		String url = "jdbc:mysql://localhost:3306/testdb?serverTimezone=UTC"; // mysql에 작성해둔 데이터 베이스가 미리 준비되야함
-
-		// 사용자 계정
+		String url = "jdbc:mysql://localhost:3306/testdb?serverTimezone=UTC"; 
 		String user = "root";
-		// 사용자 비밀번호
 		String pass = "";
-		Class.forName(driver); // Driver 세팅
-		Connection conn = DriverManager.getConnection(url, user, pass); // DBMS 선택 -> 담당자(Connection) 부여받음
+		Class.forName(driver); 
+		Connection conn = DriverManager.getConnection(url, user, pass); 
 
+		// BoardApp 기능 구현
 		while (true) {
 			System.out.print("명령어를 입력해주세요 : ");
 			String cmd = sc.nextLine();
@@ -31,17 +28,18 @@ public class BroadApp {
 			if (cmd.equals("list")) {
 				String sql = "SELECT * FROM article";
 
-				PreparedStatement pstmt = conn.prepareStatement(sql); // PreparedStatment 통해서 sql 세팅
+				PreparedStatement pstmt = conn.prepareStatement(sql);
 
-				ResultSet rs = pstmt.executeQuery(); // 조회 결과가 있는 경우
-				// pstmt.executeUpdate(); // 조회 결과가 없는 경우
+				ResultSet rs = pstmt.executeQuery(); 
 
 				while (rs.next()) {
-					String title = rs.getString("title");
+					
 					int id = rs.getInt("id");
+					String title = rs.getString("title");
 					String body = rs.getString("body");
 					String nickname = rs.getString("nickname");
 					int hit = rs.getInt("hit");
+					
 					System.out.println(id + " " + title + " " + body + " " + nickname + " " + hit);
 				}
 			} else if (cmd.equals("add")) {
@@ -55,6 +53,7 @@ public class BroadApp {
 
 				pstmt2.setString(1, title);
 				pstmt2.setString(2, body);
+				
 				pstmt2.executeUpdate();
 			}
 

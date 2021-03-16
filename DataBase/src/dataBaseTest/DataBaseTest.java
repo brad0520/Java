@@ -24,7 +24,7 @@ public class DataBaseTest {
 		Connection conn = DriverManager.getConnection(url, user, pass); // DBMS 선택 -> 담당자(Connection) 부여받음
 
 		// =========================================조회===========================================
-		String sql = "SELECT * FROM article"; //
+		String sql = "SELECT * FROM article";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql); // PreparedStatment 통해서 sql 세팅
 		
@@ -32,11 +32,13 @@ public class DataBaseTest {
 		//pstmt.executeUpdate(); // 조회 결과가 없는 경우
 		
 		while(rs.next()) {
-			String title = rs.getString("title");
+			
 			int id = rs.getInt("id");
+			String title = rs.getString("title");
 			String body = rs.getString("body");
 			String nickname = rs.getString("nickname");
 			int hit = rs.getInt("hit");
+			
 			System.out.println(id + " " + title + " " + body + " " + nickname + " " + hit);			
 		}
 		
@@ -45,7 +47,8 @@ public class DataBaseTest {
 		PreparedStatement pstmt2 = conn.prepareStatement(sql2);
 		
 		pstmt2.setString(1, "제목7");
-		pstmt2.setString(2, "내용7");			
+		pstmt2.setString(2, "내용7");		
+		
 		pstmt2.executeUpdate();
 		
 	}

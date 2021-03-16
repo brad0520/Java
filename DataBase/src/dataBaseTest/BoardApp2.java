@@ -9,101 +9,105 @@ import java.util.Scanner;
 
 public class BoardApp2 {
 	
-	
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		Scanner sc = new Scanner(System.in);
-		// 드라이버 정보
+		
+		// 데이터베이스 연결
 		String driver = "com.mysql.cj.jdbc.Driver";
-		// dbms 주소
-		String url = "jdbc:mysql://localhost:3306/testdb?serverTimezone=UTC"; //mysql에 작성해둔 데이터 베이스가 미리 준비되야함
-
-		// 사용자 계정
+		String url = "jdbc:mysql://localhost:3306/testdb?serverTimezone=UTC";
 		String user = "root";
-		// 사용자 비밀번호
 		String pass = "";
+		Class.forName(driver); 
+		Connection conn = DriverManager.getConnection(url, user, pass); 
 		
-		Class.forName(driver); // Driver 세팅
-		Connection conn = DriverManager.getConnection(url, user, pass); // DBMS 선택 -> 담당자(Connection) 부여받음
-		
-
+		// BoardApp 기능 구현
 		while (true) {
 			System.out.print("명령어를 입력해주세요 : ");
 			String cmd = sc.nextLine();
 
 			if (cmd.equals("list")) {
 				
-		
 				String sql = "SELECT * FROM article";
-
-				PreparedStatement pstmt = conn.prepareStatement(sql); // PreparedStatment 통해서 sql 세팅
-
-				ResultSet rs = pstmt.executeQuery(); // 조회 결과가 있는 경우
-				// pstmt.executeUpdate(); // 조회 결과가 없는 경우
+				// 조회한 데이터를 rs에 저장
+				PreparedStatement pstmt = conn.prepareStatement(sql); 
+				ResultSet rs = pstmt.executeQuery(); 
 
 				while (rs.next()) {
-					String title = rs.getString("title");
+					
 					int id = rs.getInt("id");
+					String title = rs.getString("title");
 					String body = rs.getString("body");
 					String nickname = rs.getString("nickname");
 					int hit = rs.getInt("hit");
+
 					System.out.println(id + " " + title + " " + body + " " + nickname + " " + hit);
+				
 				}
 			} else if (cmd.equals("add")) {
+				
 				System.out.print("제목 : ");
 				String title = sc.nextLine();
 				System.out.print("내용 : ");
 				String body = sc.nextLine();
 
-				String sql2 = " INSERT INTO article SET title = ?, `body` = ?, nickname = '홍길동', hit = 10";
-				PreparedStatement pstmt2 = conn.prepareStatement(sql2);
+				String sql = " INSERT INTO article SET title = ?, `body` = ?, nickname = '홍길동', hit = 10";
+				PreparedStatement pstmt = conn.prepareStatement(sql);
 
-				pstmt2.setString(1, title);
-				pstmt2.setString(2, body);
-				pstmt2.executeUpdate();
+				pstmt.setString(1, title);
+				pstmt.setString(2, body);
+				// 추가된 데이터를 데이터베이스에 저장 실행
+				pstmt.executeUpdate();
+				
 			} else if (cmd.equals("update")) {
 				System.out.print("번호 : ");
 				int id = Integer.parseInt(sc.nextLine());
 
-				String sql2 = "select * from article where id = ?";
-				PreparedStatement pstmt2 = conn.prepareStatement(sql2);
-				pstmt2.setInt(1, id);
-
-				ResultSet rs = pstmt2.executeQuery();
+				String sql = "select * from article where id = ?";
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, id);
+				// 요청된 데이터를 rs에 저장
+				ResultSet rs = pstmt.executeQuery();
 
 				if (rs.next()) {
-
-					String sql = "UPDATE article SET title = ?, `body` = ? WHERE id = ?";
-					PreparedStatement pstmt = conn.prepareStatement(sql);
+					// 게시물 번호가 있는 경우 실행
 					System.out.print("제목 : ");
 					String title = sc.nextLine();
 					System.out.print("내용 : ");
 					String body = sc.nextLine();
 
-					pstmt.setString(1, title);
-					pstmt.setString(2, body);
-					pstmt.setInt(3, id);
+					String sql2 = "UPDATE article SET title = ?, `body` = ? WHERE id = ?";
+					PreparedStatement pstmt2 = conn.prepareStatement(sql2);
 
-					pstmt.executeUpdate();
-				} else {
+					pstmt2.setString(1, title);
+					pstmt2.setString(2, body);
+					pstmt2.setInt(3, id);
+					// 변경된 데이터를 데이터베이스에 업데이트
+					pstmt2.executeUpdate();
+					
+				} else { // 게시물 번호가 있는 경우 실행 
 					System.out.println("없는 게시물입니다.");
+				
 				}
 			} else if (cmd.equals("delete")) {
 				System.out.print("번호 : ");
 				int id = Integer.parseInt(sc.nextLine());
 
-				String sql2 = "select * from article where id = ?";
-				PreparedStatement pstmt2 = conn.prepareStatement(sql2);
-				pstmt2.setInt(1, id);
+				String sql = "select * from article where id = ?";
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, id);
 
-				ResultSet rs = pstmt2.executeQuery();
+				ResultSet rs = pstmt.executeQuery();
 
 				if (rs.next()) {
-					String sql = "delete from article WHERE id = ?";
-					PreparedStatement pstmt = conn.prepareStatement(sql);
+					String sql2 = "delete from article WHERE id = ?";
+					PreparedStatement pstmt2 = conn.prepareStatement(sql2);
 
-					pstmt.setInt(1, id);
+					pstmt2.setInt(1, id);
 
-					pstmt.executeUpdate();
+					// 데이터 삭제 실행
+					pstmt2.executeUpdate();
+				
 				} else {
 					System.out.println("없는 게시물입니다.");
 				}
@@ -112,11 +116,11 @@ public class BoardApp2 {
 				System.out.print("번호 : ");
 				int id = Integer.parseInt(sc.nextLine());
 
-				String sql2 = "select * from article where id = ?";
-				PreparedStatement pstmt2 = conn.prepareStatement(sql2);
-				pstmt2.setInt(1, id);
+				String sql = "select * from article where id = ?";
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, id);
 
-				ResultSet rs = pstmt2.executeQuery();
+				ResultSet rs = pstmt.executeQuery();
 
 				if (rs.next()) {
 					int id2 = rs.getInt("id");
