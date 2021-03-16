@@ -25,6 +25,7 @@ java_multi_line_comment=199,221,12
 java_operator=216,216,216
 java_single_line_comment=199,221,12
 java_string=255,198,0
+markOccurrences=false
 matchingBracketsColor=244,245,246
 org.eclipse.jdt.internal.ui.navigator.layout=2
 org.eclipse.jdt.internal.ui.navigator.librariesnode=true
