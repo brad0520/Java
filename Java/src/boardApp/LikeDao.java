@@ -4,34 +4,34 @@ import java.util.ArrayList;
 
 public class LikeDao {
 	
-	private ArrayList<Like> likes;
-	private int no = 1;
+	private static ArrayList<Like> likes;
+	private static int no = 1;
 	
 	public LikeDao (){
 		likes = new ArrayList<Like>();
 	}
 	
-	public void insertLike (Like like) {
+	public static void insertLike (Like like) {
 		like.setId(no);
 		no++;
 		like.setRegDate(Util.getCurrentDate());
 		likes.add(like);
 	}
 	
-	public void removeLike (Like rst) {
+	public static void removeLike (Like rst) {
 
 		likes.remove(rst);
 	}
 	
-	public int getLikeCnt(int id) {
+	public static void getLikeCnt(Article a1) {
 		int cnt = 0;
 		for (int i = 0; i<likes.size(); i++) {
 			Like like = likes.get(i);
-			if ( like.getId() == id) { 
+			if ( like.getParentId() == a1.getId()) { 
 				cnt++;
 			}
+			a1.setLikeCnt(cnt);
 		}
-		return cnt;
 	}
 	
 	public Like getLikeByArticleIdAndMemberId(int aid, int mid) {

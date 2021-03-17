@@ -2,7 +2,6 @@ package boardApp;
 
 class BoardApp extends Controller {
 
-
 	static Member loginedMember = null;
 	MemberController mc = new MemberController();
 	ArticleController ac = new ArticleController();
@@ -32,7 +31,7 @@ class BoardApp extends Controller {
 
 		}
 	}
-	//=================================================================
+	//========================================================
 	public void printHelp() {
 		System.out.println("========================");
 		System.out.println("help : 도움말");

@@ -2,20 +2,20 @@ package boardApp;
 
 public class Article {
 
-	private int id; 
-	private String title; 
-	private String body;
-	private String regDate;
-	private String nickname;
-	private int hit;
-	private int mid;
-	private int likeCnt;
+	private int id; // 게시판 글 식별 번호 (article Id)
+	private String title; // 게시글 제목
+	private String body; // 게시글 내용
+	private String regDate; // 게시글 작성 일자
+	private String nickname; // 게시글 작성자
+	private int hit; // 게시글 조회수
+	private int mid; // 
+	private int likeCnt; // 게시글 좋아요 개수
 	
-	public Article() {
+	public Article () {
 		
 	}
 	
-	public Article(int id, String title, String body, String regDate, String nickname, int hit, int mid, int likeCnt) {
+	public Article (int id, String title, String body, String regDate, String nickname, int hit, int mid, int likeCnt) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -102,5 +102,5 @@ public class Article {
 	public void setLikeCnt(int likeCnt) {
 		this.likeCnt = likeCnt;
 	}
-
+	
 }

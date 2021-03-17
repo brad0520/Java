@@ -1,10 +1,10 @@
 package boardApp;
 
 public class Like {
-	private int id;
-	private int parentId;
-	private int memberId;
-	private String regDate;
+	private int id; // 좋아요 식별 번호 (like id)
+	private int parentId; // 좋아요를 체크한 글 번호 (article Id)
+	private int memberId; // 로그인한 맴버 아이디 (member Id)
+	private String regDate; // 좋아요 체크 날짜
 	
 	public Like() {
 	}

@@ -5,9 +5,17 @@ import java.util.ArrayList;
 public class MemberController extends Controller{
 
 	ArrayList<Member> members = new ArrayList<Member>();
-	int mNum = 1;
+	int mNum = 3;
 
-	//=================================================================
+	public MemberController() {
+		Member m1 = new Member(1, "1", "1", "1");
+		Member m2 = new Member(2, "2", "2", "2");	
+		
+		members.add(m1);
+		members.add(m2);
+	}
+	
+	//========================================================
 	public void doCommand(String command) {
 
 		if (command.equals("signup")) {
@@ -22,7 +30,7 @@ public class MemberController extends Controller{
 			}
 		}
 	}
-	//=================================================================
+	//========================================================
 	public void addMember() {
 		System.out.println("==== 회원 가입을 진행합니다. ====");
 		System.out.print("아이디를 입력해주세요 : ");
@@ -36,7 +44,7 @@ public class MemberController extends Controller{
 		mNum++;
 		System.out.println("=== 회원 가입이 완료되었습니다. ===");			
 	}	
-	//=================================================================
+	//========================================================
 	public boolean doLogin(String inputId, String inputPw) {
 		for( int i=0; i<members.size(); i++) {
 			Member member = members.get(i);
@@ -47,7 +55,7 @@ public class MemberController extends Controller{
 		} 
 		return false;			
 	}
-	//=================================================================
+	//========================================================
 	public void loginMember() {
 		if (BoardApp.loginedMember != null ) {
 			System.out.println("이미 로그인하셨습니다.");	
@@ -64,7 +72,7 @@ public class MemberController extends Controller{
 			}	
 		}
 	}
-	//=================================================================
+	//========================================================
 	public void doLogout() {
 		BoardApp.loginedMember = null;
 		System.out.println("로그아웃되었습니다. ");
