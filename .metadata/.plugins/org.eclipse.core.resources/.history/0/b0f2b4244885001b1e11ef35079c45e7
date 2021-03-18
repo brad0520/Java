@@ -1,0 +1,55 @@
+package boardApp;
+
+public class Like {
+	private int id;
+	private int parentId;
+	private int memberId;
+	private String regDate;
+	
+	@Override
+	public String toString() {
+		return "Like [id=" + id + ", parentId=" + parentId + ", memberId=" + memberId + ", regDate=" + regDate + "]";
+	}
+	
+	public Like(int id, int parentId, int memberId, String regDate) {
+		super();
+		this.id = id;
+		this.parentId = parentId;
+		this.memberId = memberId;
+		this.regDate = regDate;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(int parentId) {
+		this.parentId = parentId;
+	}
+
+	public int getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(int memberId) {
+		this.memberId = memberId;
+	}
+
+	public String getRegDate() {
+		return regDate;
+	}
+
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
+	}
+	
+	
+}

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+<<<<<<< HEAD
 	<list key="installedFeatures">
 		<item value="com.ianbrandt.tools.m2e.mdp.feature:0.0.4.201409291703"/>
 		<item value="org.eclipse.buildship:3.1.2.v20190903-1802"/>
@@ -55,5 +56,8 @@
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
 			<item value="C:\Users\SBS-\Desktop\Java2"/>
 		</list>
+=======
+	<section name="NewWizardAction">
+>>>>>>> 3a4c1cd431e46d49e36af2812d5b91cef02c41d3
 	</section>
 </section>

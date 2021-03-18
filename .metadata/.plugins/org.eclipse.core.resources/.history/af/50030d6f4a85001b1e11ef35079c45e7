@@ -1,0 +1,19 @@
+package boardApp;
+
+import java.util.ArrayList;
+
+public class LikeDao {
+	
+	ArrayList<Like> likes;
+	int = no;
+	
+	public LikeDao (){
+		likes = new ArrayList<Like>();
+	}
+	
+	public void insertLike (Like like) {
+		like.setId(no);
+		no++
+	}
+	
+}
