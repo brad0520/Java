@@ -1,1 +1,15 @@
+<<<<<<< HEAD
 /.metadata/
+=======
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+>>>>>>> f00d9b111131b1922b6e02d0aac89563727cbf0a
